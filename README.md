@@ -1,1 +1,1 @@
-# Standlone.Neo4j.config
+# Standalone.Neo4j.config
