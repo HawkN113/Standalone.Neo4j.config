@@ -1,0 +1,38 @@
+services:
+  
+  # Set Neo4j instance (Enterprise edition 4.4.40)
+  neo4j-01:
+    build:
+      context: ./neo4j
+      dockerfile: Dockerfile
+    container_name: neo4j-01
+    privileged: true
+    user: '10000:11000'
+    environment:
+      NEO4J_AUTH: ${NEO4J_ADMIN_LOGIN}/${NEO4J_ADMIN_PASSWORD}
+      NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
+      EXTENDED_CONF: "yes"
+    volumes:
+      - ./neo4j/data:/data
+      - ./neo4j/logs:/logs
+      - ./neo4j/import:/import
+      - ./neo4j/plugins:/plugins
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", 
+             "curl",  
+             "-s", "http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    networks:
+      cluster-network:
+        aliases:
+          - neo4j-01
+
+networks:
+  cluster-network:
+    driver: bridge

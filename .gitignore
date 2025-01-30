@@ -1,0 +1,6 @@
+**/.idea/*
+**/src/docker/neo4j/data/*
+**/src/docker/neo4j/logs/*
+**/src/docker/neo4j/import/*
+/4.4/src/Neo4j.v4.Console/obj/*
+/4.4/src/Neo4j.v4.Console/bin/*
